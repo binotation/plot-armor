@@ -12,7 +12,7 @@ void child_exit_handler(int sig) {
     if (!fork()) {
         freopen(stdout_redirect, "w+", stdout);
         freopen(stderr_redirect, "w+", stderr);
-        execv(filepath, bin_args);
+        execvp(filepath, bin_args);
     }
 }
 
