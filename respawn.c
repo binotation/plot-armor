@@ -10,8 +10,8 @@ static char **bin_args;
 
 void child_exit_handler(int sig) {
     if (!fork()) {
-        freopen(stdout_redirect, "w+", stdout);
-        freopen(stderr_redirect, "w+", stderr);
+        freopen(stdout_redirect, "a+", stdout);
+        freopen(stderr_redirect, "a+", stderr);
         execvp(binpath, bin_args);
     }
 }
