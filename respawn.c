@@ -6,9 +6,9 @@
 
 // Before child execs
 #define CHLD_INIT_ROUTINE() {\
-    freopen(stdout_redirect, "a+", stdout);\
-    freopen(stderr_redirect, "a+", stderr);\
-    execvp(binpath, bin_args);\
+    freopen(outf, "a+", stdout);\
+    freopen(errf, "a+", stderr);\
+    execvp(bin, binargs);\
 }
 
 void cpy_slice_into(char **args, char **argv_slice) {
@@ -21,17 +21,17 @@ void cpy_slice_into(char **args, char **argv_slice) {
 
 int main(int argc, char **argv) {
     if (argc < 4) {
-        fputs("Usage: respawn binpath stdout_redirect stderr_redirect bin_args...\n", stderr);
+        fputs("Usage: respawn bin outf errf binargs...\n", stderr);
         return 1;
     }
 
-    char *binpath = argv[1];
-    char *stdout_redirect = argv[2];
-    char *stderr_redirect = argv[3];
+    char *bin = argv[1];
+    char *outf = argv[2];
+    char *errf = argv[3];
 
-    char **bin_args = malloc(sizeof(char*) * (argc - 2));
-    cpy_slice_into(bin_args, &argv[3]);
-    bin_args[0] = binpath;
+    char **binargs = malloc(sizeof(char*) * (argc - 2));
+    cpy_slice_into(binargs, &argv[3]);
+    binargs[0] = bin;
 
     if (!fork()) {
         // Spawn initial child process
