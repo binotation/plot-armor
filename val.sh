@@ -1,5 +1,5 @@
 #!/bin/bash
-valgrind --leak-check=full\
+valgrind -s --leak-check=full\
     --show-leak-kinds=possible\
     --track-origins=yes\
     --log-file=vout.log\
