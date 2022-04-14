@@ -1,3 +1,4 @@
 *.o
-respawn
 *.log
+respawn
+print_args
