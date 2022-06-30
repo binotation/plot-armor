@@ -1,13 +1,11 @@
-CC=gcc
-CFLAGS=-Wall -pedantic -std=gnu99
+CC := clang
+CFLAGS := -Wall -Wextra -std=gnu17
 
-.DEFAULT_GOAL:=respawn
+.PHONY: target
+.DEFAULT_GOAL := target
 
-.PHONY: release
-
-release: CFLAGS+=-O3
-
-release: respawn
+target: CFLAGS += -O3
+target: respawn
 
 respawn: respawn.c
 	$(CC) $(CFLAGS) respawn.c -o respawn
