@@ -1,5 +1,3 @@
-*.o
-*.log
-respawn
-print_args
-crash
+target/
+*.out
+*.err
