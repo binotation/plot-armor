@@ -2,32 +2,30 @@
 //! Dumb process respawner for immediately respawning a process executing a binary when it ends.
 //! Uses the clap crate for parsing CLI args.
 
-extern crate nix;
-
 use clap::Parser;
 use std::fs::OpenOptions;
 use std::os::unix::io::{FromRawFd, IntoRawFd};
 use std::process::{Command, Stdio};
 
-/// Provide a path to a binary to respawn with -b. Specify stdout/stderr redirects with -o and -e.
-/// Provide CLI args to the binary with --bin-args.
+/// Respawn the binary <BIN>. Specify stdout/stderr redirects with -o and -e.
+/// Provide CLI args to the binary with -a.
 #[derive(Parser)]
 #[clap(author, version, about)]
 struct Args {
     /// Path to binary
-    #[clap(short, long, value_parser)]
+    #[clap(value_parser)]
     bin: String,
 
     /// Redirect binary stdout to outf
-    #[clap(short, long, value_parser, default_value = "bin.out")]
+    #[clap(short, value_parser, default_value = "bin.out")]
     outf: String,
 
     /// Redirect binary stderr to errf
-    #[clap(short, long, value_parser, default_value = "bin.err")]
+    #[clap(short, value_parser, default_value = "bin.err")]
     errf: String,
 
     /// CLI args for binary
-    #[clap(long, value_parser, multiple_values = true)]
+    #[clap(short = 'a', value_parser, multiple_values = true)]
     bin_args: Vec<String>,
 }
 
